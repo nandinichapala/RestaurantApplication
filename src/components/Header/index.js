@@ -8,11 +8,6 @@ const Header = props => {
     <CartContext.Consumer>
       {value => {
         const {cartList} = value
-        let quantityVal = 0
-
-        cartList.forEach(each => {
-          quantityVal += each.quantity
-        })
 
         return (
           <nav className="nav-container">
@@ -21,7 +16,7 @@ const Header = props => {
               <p className="my-orders-text">My Orders</p>
               <AiOutlineShoppingCart className="cart-image" />
               <div className="quantity-container">
-                <p className="quantity-count">{quantityVal}</p>
+                <p className="quantity-count">{cartList.length}</p>
               </div>
             </div>
           </nav>

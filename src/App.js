@@ -121,21 +121,24 @@ class App extends Component {
 
   addItemCart = dish => {
     const {cartList} = this.state
+    console.log(cartList)
     const dishObject = cartList.find(each => each.dishId === dish.dishId)
 
     if (dishObject) {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(eachItem => {
-          if (dishObject.dishId === eachItem.dishId) {
-            const updatedQuantity = dishObject.quantity + 1
+          if (dish.dishId === eachItem.dishId) {
+            console.log(dish.dishId === eachItem.dishId)
+            const updatedQuantity = eachItem.quantity + 1
             return {...eachItem, quantity: updatedQuantity}
           }
           return eachItem
         }),
       }))
     } else {
-      const updatedList = [...cartList, {...dish, quantity: 1}]
-      this.setState({cartList: updatedList})
+      this.setState(prevState => ({
+        cartList: [...prevState.cartList, {...dish, quantity: 1}],
+      }))
     }
   }
 
@@ -143,7 +146,7 @@ class App extends Component {
     const {cartList} = this.state
     const dishObj = cartList.find(each => each.dishId === dish.dishId)
 
-    if (dishObj.quantity > 0) {
+    if (dishObj.quantity > 1) {
       this.setState(prevState => ({
         cartList: prevState.cartList.map(each => {
           if (dish.dishId === each.dishId) {
@@ -155,13 +158,12 @@ class App extends Component {
       }))
     } else {
       this.deleteCartItem(dish.dishId)
-      const updatedList = [...cartList, {...dish, quantity: 0}]
-      this.setState({cartList: updatedList})
     }
   }
 
   render() {
     const {cartList} = this.state
+    console.log(cartList)
     return (
       <CartContext.Provider
         value={{
