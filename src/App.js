@@ -155,7 +155,7 @@ class App extends Component {
           return each
         }),
       }))
-    } else if (dishObj.quantity === 1) {
+    } else if (dishObj.quantity > 0) {
       this.deleteCartItem(dish.dishId)
     }
   }
