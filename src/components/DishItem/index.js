@@ -29,12 +29,21 @@ class DishItem extends Component {
           }
 
           const onDecreamentQuantity = () => {
-            removeItemCart({...dishDetails, quantity})
+            const dishObj = cartList.find(
+              each => each.dishId === dishDetails.dishId,
+            )
+            console.log(dishObj)
+            if (quantity>1){
+              if(dishObj.quantity >= 1){
+                removeItemCart({...dishDetails, quantity})
+              }
+              
+            }
           }
 
           const dishObj = cartList.find(each => each.dishId === dishId)
           let quantityValue = quantity
-          console.log(dishObj)
+
           if (dishObj) {
             quantityValue = dishObj.quantity
           }
