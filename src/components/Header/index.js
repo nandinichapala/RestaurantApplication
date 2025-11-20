@@ -9,6 +9,10 @@ const Header = props => {
       {value => {
         const {cartList} = value
 
+        let cartCount=0
+
+        cartList.forEach((each)=>cartCount+=each.quantity)
+        console.log(cartCount)
         return (
           <nav className="nav-container">
             <h1 className="nav-heading">{restoName}</h1>
@@ -16,7 +20,7 @@ const Header = props => {
               <p className="my-orders-text">My Orders</p>
               <AiOutlineShoppingCart className="cart-image" />
               <div className="quantity-container">
-                <p className="quantity-count">{cartList.length}</p>
+                <p className="quantity-count">{cartCount}</p>
               </div>
             </div>
           </nav>

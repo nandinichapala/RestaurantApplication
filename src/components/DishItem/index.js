@@ -3,8 +3,6 @@ import './index.css'
 import CartContext from '../../context/CartContext'
 
 class DishItem extends Component {
-  state = {quantity: 0}
-
   render() {
     const {dishDetails} = this.props
     return (
@@ -23,21 +21,19 @@ class DishItem extends Component {
             dishType,
           } = dishDetails
           const {addItemCart, removeItemCart, cartList} = value
-          const {quantity} = this.state
           const onIncreamentQuantity = () => {
-            addItemCart({...dishDetails, quantity})
+            addItemCart({...dishDetails})
           }
 
           const onDecreamentQuantity = () => {
-            
-            const dishObj=cartList.find((each)=>each.dishId===dishId)
-            if (dishObj!==undefined){
-               removeItemCart({...dishDetails, quantity})
-            } 
+            const dishObj = cartList.find(each => each.dishId === dishId)
+            if (dishObj !== undefined) {
+              removeItemCart({...dishDetails})
+            }
           }
 
           const dishObj = cartList.find(each => each.dishId === dishId)
-          let quantityValue = quantity
+          let quantityValue = 0
 
           if (dishObj) {
             quantityValue = dishObj.quantity
