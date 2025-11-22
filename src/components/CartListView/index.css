@@ -1,0 +1,9 @@
+.cart-list-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding-left: 0px;
+  list-style-type: none;
+}

@@ -91,7 +91,7 @@
   align-items: center;
   height: 40px;
   width: 120px;
-  background-color: #189106;
+  background-color: #f2a807;
   border-radius: 25px;
   padding: 5px;
 }
@@ -110,4 +110,20 @@
 .custom-text {
   color: #4d07e3;
   font-size: 22px;
+}
+.increase-decrease-btn-addcart-btn-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.addcart-btn {
+  background-color: #f2a807;
+  height: 40px;
+  width: 120px;
+  color: #ffffff;
+  border: none;
+  border-radius: 25px;
+  margin-left: 20px;
+  font-weight: 600;
 }

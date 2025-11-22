@@ -1,0 +1,74 @@
+.login-container {
+  background-color: #f2a807;
+  background-size: cover;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto';
+}
+.login-card-container {
+  height: 320px;
+  width: 320px;
+  background-color: #ffffff;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  border-radius: 25px;
+}
+.login-card-heading {
+  color: #000000;
+  font-family: serif;
+}
+.login-card-form-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+.login-card-input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+.input-label {
+  color: #575757;
+  font-size: 18px;
+  font-weight: 400;
+  margin-bottom: 8px;
+}
+.input-container {
+  height: 32px;
+  width: 100%;
+  background-color: transparent;
+  padding: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid #c4c2c2;
+  border-radius: 3px;
+}
+.submit-btn {
+  background-color: #f2a807;
+  color: #ffffff;
+  height: 32px;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}
+.Error-msg {
+  color: red;
+  font-size: 14px;
+}

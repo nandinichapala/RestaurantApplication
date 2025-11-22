@@ -3,40 +3,40 @@ import './index.css'
 import CartContext from '../../context/CartContext'
 
 class DishItem extends Component {
+  state = {quantity: 0}
+  onIncreamentQuantity = () => {
+    this.setState(prevState => ({quantity: prevState.quantity + 1}))
+  }
+
+  onDecreamentQuantity = () => {
+    const {quantity} = this.state
+    if (quantity > 0) {
+      this.setState(prevState => ({quantity: prevState.quantity - 1}))
+    }
+  }
+
   render() {
-    const {dishDetails} = this.props
     return (
       <CartContext.Consumer>
         {value => {
-          const {
-            addonCat,
-            dishAvailability,
-            dishCurrency,
-            dishCalories,
-            dishDescription,
-            dishImage,
-            dishName,
-            dishId,
-            dishPrice,
-            dishType,
-          } = dishDetails
-          const {addItemCart, removeItemCart, cartList} = value
-          const onIncreamentQuantity = () => {
-            addItemCart({...dishDetails})
-          }
+          const {addCartItem} = value
+              const {dishDetails} = this.props
+    const {
+      addonCat,
+      dishAvailability,
+      dishCurrency,
+      dishCalories,
+      dishDescription,
+      dishImage,
+      dishName,
+      dishId,
+      dishPrice,
+      dishType,
+    } = dishDetails
 
-          const onDecreamentQuantity = () => {
-            const dishObj = cartList.find(each => each.dishId === dishId)
-            if (dishObj !== undefined) {
-              removeItemCart({...dishDetails})
-            }
-          }
-
-          const dishObj = cartList.find(each => each.dishId === dishId)
-          let quantityValue = 0
-
-          if (dishObj) {
-            quantityValue = dishObj.quantity
+    const {quantity} = this.state
+          const onClickAddCartItem=()=>{
+            addCartItem({...dishDetails,quantity})
           }
 
           return (
@@ -58,22 +58,31 @@ class DishItem extends Component {
                   </p>
                   <p className="dish-description">{dishDescription}</p>
                   {dishAvailability ? (
-                    <div className="increase-decrease-btn-container">
-                      <button
-                        className="quantity-btn"
-                        type="button"
-                        onClick={onDecreamentQuantity}
-                      >
-                        -
-                      </button>
-                      <p className="qantity">{quantityValue}</p>
-                      <button
-                        className="quantity-btn"
-                        type="button"
-                        onClick={onIncreamentQuantity}
-                      >
-                        +
-                      </button>
+                    <div className="increase-decrease-btn-addcart-btn-container">
+                      <div className="increase-decrease-btn-container">
+                        <button
+                          className="quantity-btn"
+                          type="button"
+                          onClick={this.onDecreamentQuantity}
+                        >
+                          -
+                        </button>
+                        <p className="qantity">{quantity}</p>
+                        <button
+                          className="quantity-btn"
+                          type="button"
+                          onClick={this.onIncreamentQuantity}
+                        >
+                          +
+                        </button>
+                      </div>
+                      {quantity > 0 ? (
+                        <button type="button" className="addcart-btn" onClick={onClickAddCartItem}>
+                          ADD TO CART
+                        </button>
+                      ) : (
+                        ''
+                      )}
                     </div>
                   ) : (
                     <p className="not-available-text">Not available</p>
