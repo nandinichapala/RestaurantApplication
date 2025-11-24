@@ -19,9 +19,9 @@ class Login extends Component {
     this.setState({password: event.target.value})
   }
 
-  renderSuccessView = JWTtoken => {
+  renderSuccessView = jwtToken => {
     const {history} = this.props
-    Cookies.set('jwt_token', JWTtoken, {expires: 30})
+    Cookies.set('jwt_token', jwtToken, {expires: 30})
     history.replace('/')
   }
 
@@ -31,6 +31,7 @@ class Login extends Component {
       errorMsg,
     }))
   }
+
   onSubmitLoginForm = async event => {
     event.preventDefault()
     const {username, password} = this.state
@@ -88,7 +89,7 @@ class Login extends Component {
                 onChange={this.onChangePasswordInput}
                 id="password"
                 value={password}
-                placeholder="password"
+                placeholder="Password"
               />
             </div>
             <button type="submit" className="submit-btn">

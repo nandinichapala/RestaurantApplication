@@ -21,36 +21,36 @@ const CartItem = props => (
         decrementCartItemQuantity(dishId)
       }
       return (
-        <li className='cart-dish-item-container'>
-          <div className='dish-image-title-container'>
-            <img src={dishImage} className='dish-item-image' role='img' />
-            <p className='dish-item-name'>{dishName}</p>
+        <li className="cart-dish-item-container">
+          <div className="dish-image-title-container">
+            <img src={dishImage} className="dish-item-image" alt={dishName} />
+            <p className="dish-item-name">{dishName}</p>
           </div>
-          <div className='dish-quantity-price-del-btn-container'>
-            <div className='dish-item-quantity-container'>
+          <div className="dish-quantity-price-del-btn-container">
+            <div className="dish-item-quantity-container">
               <button
-                type='button'
-                className='dish-item-decrease-btn'
+                type="button"
+                className="dish-item-decrease-btn"
+                data-testid="decrement-quantity"
                 onClick={onClickDecreaseCartItemQuantity}
               >
                 -
               </button>
-              <p className='dish-item-quantity'>{quantity}</p>
+              <p className="dish-item-quantity">{quantity}</p>
               <button
-                type='button'
-                className='dish-item-increase-btn'
+                type="button"
+                className="dish-item-increase-btn"
+                data-testid="increment-quantity"
                 onClick={onClickIncreaseCartItemQuantity}
               >
                 +
               </button>
             </div>
-            <div className='dish-item-price-del-btn-container'>
-              <p className='dish-item-price'>
-                Rs {quantity * dishPrice * 24}/-
-              </p>
+            <div className="dish-item-price-del-btn-container">
+              <p className="dish-item-price">Rs {quantity * dishPrice}/-</p>
               <button
-                type='button'
-                className='dish-item-del-btn'
+                type="button"
+                className="dish-item-del-btn"
                 onClick={onClickRemoveItemFromCart}
               >
                 Remove

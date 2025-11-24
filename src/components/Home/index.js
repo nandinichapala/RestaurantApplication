@@ -8,51 +8,11 @@ import Header from '../Header'
 import TabListItem from '../TabListItem'
 import DishItem from '../DishItem'
 
-const apisStatus = {
-  initial: 'INITIAL',
-  inProgress: 'INPROGRESS',
-  success: 'SUCCESS',
-}
+import CartContext from '../../context/CartContext'
 
 class Home extends Component {
   state = {
-    activeApiStatus: apisStatus.initial,
     activeCategoryId: '11',
-    dishesList: [],
-  }
-
-  componentDidMount() {
-    this.getDishesList()
-  }
-
-  getDishesList = async () => {
-    this.setState({activeApiStatus: apisStatus.inProgress})
-    const url =
-      'https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details'
-    const response = await fetch(url)
-    const data = await response.json()
-
-    const updatedList = data[0].table_menu_list.map(eachObj => ({
-      menuCategory: eachObj.menu_category,
-      menuCategoryId: eachObj.menu_category_id,
-      menuCategoryImage: eachObj.menu_category_image,
-      categoryDishes: eachObj.category_dishes.map(each => ({
-        addonCat: each.addonCat,
-        dishAvailability: each.dish_Availability,
-        dishType: each.dish_Type,
-        dishCalories: each.dish_calories,
-        dishCurrency: each.dish_currency,
-        dishDescription: each.dish_description,
-        dishId: each.dish_id,
-        dishImage: each.dish_image,
-        dishName: each.dish_name,
-        dishPrice: each.dish_price,
-      })),
-    }))
-    this.setState({
-      dishesList: updatedList,
-      activeApiStatus: apisStatus.success,
-    })
   }
 
   onChangeActiveTabId = menuCategoryId => {
@@ -65,8 +25,9 @@ class Home extends Component {
     </div>
   )
 
-  renderSuccessView = () => {
-    const {dishesList, activeCategoryId} = this.state
+  renderSuccessView = dishesList => {
+    
+    const {activeCategoryId} = this.state
 
     const categoryWiseObj = dishesList.find(
       each => each.menuCategoryId === activeCategoryId,
@@ -89,7 +50,11 @@ class Home extends Component {
           </ul>
           <ul className="dish-list-container">
             {categoryDishes.map(eachDishItem => (
-              <DishItem key={eachDishItem.dishId} dishDetails={eachDishItem} />
+              <DishItem
+                key={eachDishItem.dishId}
+                dishDetails={eachDishItem}
+                activeCategoryId={activeCategoryId}
+              />
             ))}
           </ul>
         </div>
@@ -97,21 +62,26 @@ class Home extends Component {
     )
   }
 
-  renderDishesItemCarts = () => {
-    const {activeApiStatus} = this.state
-
+  renderDishesItemCarts = (activeApiStatus, dishesList) => {
     switch (activeApiStatus) {
-      case apisStatus.inProgress:
+      case 'INPROGRESS':
         return this.renderLoadingView()
-      case apisStatus.success:
-        return this.renderSuccessView()
+      case 'SUCCESS':
+        return this.renderSuccessView(dishesList)
       default:
         return null
     }
   }
 
   render() {
-    return <>{this.renderDishesItemCarts()}</>
+    return (
+      <CartContext.Consumer>
+        {value => {
+          const {activeApiStatus, dishesList} = value
+          return <>{this.renderDishesItemCarts(activeApiStatus, dishesList)}</>
+        }}
+      </CartContext.Consumer>
+    )
   }
 }
 

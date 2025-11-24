@@ -3,40 +3,46 @@ import './index.css'
 import CartContext from '../../context/CartContext'
 
 class DishItem extends Component {
-  state = {quantity: 0}
-  onIncreamentQuantity = () => {
-    this.setState(prevState => ({quantity: prevState.quantity + 1}))
-  }
-
-  onDecreamentQuantity = () => {
-    const {quantity} = this.state
-    if (quantity > 0) {
-      this.setState(prevState => ({quantity: prevState.quantity - 1}))
-    }
-  }
-
   render() {
     return (
       <CartContext.Consumer>
         {value => {
-          const {addCartItem} = value
-              const {dishDetails} = this.props
-    const {
-      addonCat,
-      dishAvailability,
-      dishCurrency,
-      dishCalories,
-      dishDescription,
-      dishImage,
-      dishName,
-      dishId,
-      dishPrice,
-      dishType,
-    } = dishDetails
+          const {
+            addCartItem,
+            increaseDishItemQuantity,
+            decreaseDishItemQuantity,
+            cartList,
+          } = value
+          const {dishDetails, activeCategoryId} = this.props
+          const {
+            addonCat,
+            dishAvailability,
+            dishCurrency,
+            dishCalories,
+            dishDescription,
+            dishImage,
+            dishName,
+            dishId,
+            dishPrice,
+            dishType,
+            quantity,
+          } = dishDetails
 
-    const {quantity} = this.state
-          const onClickAddCartItem=()=>{
-            addCartItem({...dishDetails,quantity})
+          console.log(quantity)
+
+          const onClickAddCartItem = () => {
+            addCartItem({...dishDetails})
+          }
+
+          const onDecreamentQuantity = () => {
+            const dishObj = cartList.find(each => each.dishId === dishId)
+            if (dishObj !== undefined) {
+              decreaseDishItemQuantity(dishId, activeCategoryId)
+            }
+          }
+
+          const onIncreamentQuantity = () => {
+            increaseDishItemQuantity(dishId, activeCategoryId)
           }
 
           return (
@@ -63,7 +69,7 @@ class DishItem extends Component {
                         <button
                           className="quantity-btn"
                           type="button"
-                          onClick={this.onDecreamentQuantity}
+                          onClick={onDecreamentQuantity}
                         >
                           -
                         </button>
@@ -71,13 +77,17 @@ class DishItem extends Component {
                         <button
                           className="quantity-btn"
                           type="button"
-                          onClick={this.onIncreamentQuantity}
+                          onClick={onIncreamentQuantity}
                         >
                           +
                         </button>
                       </div>
                       {quantity > 0 ? (
-                        <button type="button" className="addcart-btn" onClick={onClickAddCartItem}>
+                        <button
+                          type="button"
+                          className="addcart-btn"
+                          onClick={onClickAddCartItem}
+                        >
                           ADD TO CART
                         </button>
                       ) : (

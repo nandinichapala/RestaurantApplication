@@ -8,23 +8,60 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 import CartContext from './context/CartContext'
 
+const apisStatus = {
+  initial: 'INITIAL',
+  inProgress: 'INPROGRESS',
+  success: 'SUCCESS',
+}
+
 class App extends Component {
   state = {
     cartList: [],
     restaurantName: '',
+    activeApiStatus: apisStatus.initial,
+    dishesList: [],
+    quantity: 0,
   }
 
   componentDidMount() {
-    this.getRestaurantName()
+    this.getDishesList()
   }
 
-  getRestaurantName = async () => {
+  getDishesList = async () => {
+    this.setState({activeApiStatus: apisStatus.inProgress})
     const url =
       'https://apis2.ccbp.in/restaurant-app/restaurant-menu-list-details'
     const response = await fetch(url)
     const data = await response.json()
+
+    const {quantity} = this.state
+    console.log(data)
+    const updatedList = data[0].table_menu_list.map(eachObj => ({
+      menuCategory: eachObj.menu_category,
+      menuCategoryId: eachObj.menu_category_id,
+      menuCategoryImage: eachObj.menu_category_image,
+      categoryDishes: eachObj.category_dishes.map(each => ({
+        addonCat: each.addonCat,
+        dishAvailability: each.dish_Availability,
+        dishType: each.dish_Type,
+        dishCalories: each.dish_calories,
+        dishCurrency: each.dish_currency,
+        dishDescription: each.dish_description,
+        dishId: each.dish_id,
+        dishImage: each.dish_image,
+        dishName: each.dish_name,
+        dishPrice: each.dish_price,
+        quantity: quantity,
+      })),
+    }))
+
     const restaurantName = data[0].restaurant_name
-    this.setState({restaurantName})
+
+    this.setState({
+      dishesList: updatedList,
+      activeApiStatus: apisStatus.success,
+      restaurantName,
+    })
   }
 
   removeAllCartItems = () => {
@@ -48,7 +85,7 @@ class App extends Component {
       }))
     } else {
       this.setState(prevState => ({
-        cartList: [...prevState.cartList, {...dish}],
+        cartList: [...prevState.cartList, {...dish, quantity: 1}],
       }))
     }
   }
@@ -89,18 +126,39 @@ class App extends Component {
     }
   }
 
+  increaseDishItemQuantity = (dishId, activeCategoryId) => {
+    this.setState(prevState => ({
+      dishesList: prevState.dishesList.map(each => {
+        console.log(each)
+        if (each.menuCategoryId === activeCategoryId) {
+          return each.categoryDishes.map(eachItem => {
+            if (eachItem.dishId === dishId) {
+              const updatedQuantity = eachItem.quantity + 1
+              return {...eachItem, quantity: updatedQuantity}
+            }
+            return eachItem
+          })
+        }
+      }),
+    }))
+  }
+
   render() {
-    const {cartList, restaurantName} = this.state
+    const {cartList, restaurantName, activeApiStatus, dishesList} = this.state
     return (
       <CartContext.Provider
         value={{
           cartList,
           restaurantName,
+          activeApiStatus,
+          dishesList,
           addCartItem: this.addCartItem,
           removeCartItem: this.removeCartItem,
           removeAllCartItems: this.removeAllCartItems,
           incrementCartItemQuantity: this.incrementCartItemQuantity,
           decrementCartItemQuantity: this.decrementCartItemQuantity,
+          increaseDishItemQuantity: this.increaseDishItemQuantity,
+          decreaseDishItemQuantity: this.decreaseDishItemQuantity,
         }}
       >
         <Switch>
