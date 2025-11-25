@@ -38,41 +38,42 @@ class DishItem extends Component {
           }
 
           const onIncreamentQuantity = () => {
+            console.log('+ btn clicked')
             increaseDishItemQuantity(dishId, activeCategoryId)
           }
 
           return (
-            <li className="list-item-container">
-              <div className="veg-or-nonveg-details-description-container">
+            <li className='list-item-container'>
+              <div className='veg-or-nonveg-details-description-container'>
                 {dishType === 2 ? (
-                  <div className="green-label-container">
-                    <div className="green-dot-container" />
+                  <div className='green-label-container'>
+                    <div className='green-dot-container' />
                   </div>
                 ) : (
-                  <div className="red-label-container">
-                    <div className="red-dot-container" />
+                  <div className='red-label-container'>
+                    <div className='red-dot-container' />
                   </div>
                 )}
-                <div className="description-details-container">
-                  <h1 className="dish-name">{dishName}</h1>
-                  <p className="dish-price">
+                <div className='description-details-container'>
+                  <h1 className='dish-name'>{dishName}</h1>
+                  <p className='dish-price'>
                     {dishCurrency} {dishPrice}
                   </p>
-                  <p className="dish-description">{dishDescription}</p>
+                  <p className='dish-description'>{dishDescription}</p>
                   {dishAvailability ? (
-                    <div className="increase-decrease-btn-addcart-btn-container">
-                      <div className="increase-decrease-btn-container">
+                    <div className='increase-decrease-btn-addcart-btn-container'>
+                      <div className='increase-decrease-btn-container'>
                         <button
-                          className="quantity-btn"
-                          type="button"
+                          className='quantity-btn'
+                          type='button'
                           onClick={onDecreamentQuantity}
                         >
                           -
                         </button>
-                        <p className="qantity">{quantity}</p>
+                        <p className='qantity'>{quantity}</p>
                         <button
-                          className="quantity-btn"
-                          type="button"
+                          className='quantity-btn'
+                          type='button'
                           onClick={onIncreamentQuantity}
                         >
                           +
@@ -80,8 +81,8 @@ class DishItem extends Component {
                       </div>
                       {quantity > 0 ? (
                         <button
-                          type="button"
-                          className="addcart-btn"
+                          type='button'
+                          className='addcart-btn'
                           onClick={onClickAddCartItem}
                         >
                           ADD TO CART
@@ -91,17 +92,17 @@ class DishItem extends Component {
                       )}
                     </div>
                   ) : (
-                    <p className="not-available-text">Not available</p>
+                    <p className='not-available-text'>Not available</p>
                   )}
                   {addonCat.length !== 0 ? (
-                    <p className="custom-text">Customizations available</p>
+                    <p className='custom-text'>Customizations available</p>
                   ) : (
                     ''
                   )}
                 </div>
               </div>
-              <p className="dish-calories">{dishCalories} calories</p>
-              <img src={dishImage} className="dish-image" alt="dishItem" />
+              <p className='dish-calories'>{dishCalories} calories</p>
+              <img src={dishImage} className='dish-image' alt='dishItem' />
             </li>
           )
         }}

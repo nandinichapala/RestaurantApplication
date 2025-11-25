@@ -7,7 +7,7 @@ import Cookies from 'js-cookie'
 const Header = props => {
   const onClickLogoutBtn = () => {
     const {history} = props
-    Cookies.remove('jwt_Token')
+    Cookies.remove('jwt_token')
     history.replace('/login')
   }
   return (
