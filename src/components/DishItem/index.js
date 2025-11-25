@@ -11,7 +11,6 @@ class DishItem extends Component {
             addCartItem,
             increaseDishItemQuantity,
             decreaseDishItemQuantity,
-            cartList,
           } = value
           const {dishDetails, activeCategoryId} = this.props
           const {
@@ -35,10 +34,7 @@ class DishItem extends Component {
           }
 
           const onDecreamentQuantity = () => {
-            const dishObj = cartList.find(each => each.dishId === dishId)
-            if (dishObj !== undefined) {
-              decreaseDishItemQuantity(dishId, activeCategoryId)
-            }
+            decreaseDishItemQuantity(dishId, activeCategoryId)
           }
 
           const onIncreamentQuantity = () => {

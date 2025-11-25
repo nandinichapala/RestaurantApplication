@@ -26,12 +26,14 @@ class Home extends Component {
   )
 
   renderSuccessView = dishesList => {
-    
     const {activeCategoryId} = this.state
 
     const categoryWiseObj = dishesList.find(
       each => each.menuCategoryId === activeCategoryId,
     )
+    if (!categoryWiseObj) {
+      return <div>No dishes found for this category</div>
+    }
     const {categoryDishes} = categoryWiseObj
 
     return (

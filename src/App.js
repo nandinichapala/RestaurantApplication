@@ -51,7 +51,7 @@ class App extends Component {
         dishImage: each.dish_image,
         dishName: each.dish_name,
         dishPrice: each.dish_price,
-        quantity: quantity,
+        quantity,
       })),
     }))
 
@@ -85,7 +85,7 @@ class App extends Component {
       }))
     } else {
       this.setState(prevState => ({
-        cartList: [...prevState.cartList, {...dish, quantity: 1}],
+        cartList: [...prevState.cartList, {...dish}],
       }))
     }
   }
@@ -128,17 +128,38 @@ class App extends Component {
 
   increaseDishItemQuantity = (dishId, activeCategoryId) => {
     this.setState(prevState => ({
-      dishesList: prevState.dishesList.map(each => {
-        console.log(each)
-        if (each.menuCategoryId === activeCategoryId) {
-          return each.categoryDishes.map(eachItem => {
-            if (eachItem.dishId === dishId) {
-              const updatedQuantity = eachItem.quantity + 1
-              return {...eachItem, quantity: updatedQuantity}
-            }
-            return eachItem
-          })
+      dishesList: prevState.dishesList.map(eachCategory => {
+        if (eachCategory.menuCategoryId === activeCategoryId) {
+          const updatedCategoryDishes = eachCategory.categoryDishes.map(
+            eachDish => {
+              if (eachDish.dishId === dishId) {
+                return {...eachDish, quantity: eachDish.quantity + 1}
+              }
+              return eachDish
+            },
+          )
+          return {...eachCategory, categoryDishes: updatedCategoryDishes}
         }
+        return eachCategory
+      }),
+    }))
+  }
+
+  decreaseDishItemQuantity = (dishId, activeCategoryId) => {
+    this.setState(prevState => ({
+      dishesList: prevState.dishesList.map(eachCategory => {
+        if (eachCategory.menuCategoryId === activeCategoryId) {
+          const updatedCategoryDishes = eachCategory.categoryDishes.map(
+            eachDish => {
+              if (eachDish.dishId === dishId && eachDish.quantity > 0) {
+                return {...eachDish, quantity: eachDish.quantity - 1}
+              }
+              return eachDish
+            },
+          )
+          return {...eachCategory, categoryDishes: updatedCategoryDishes}
+        }
+        return eachCategory
       }),
     }))
   }
