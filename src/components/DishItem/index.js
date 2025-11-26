@@ -7,10 +7,13 @@ class DishItem extends Component {
     return (
       <CartContext.Consumer>
         {value => {
+          const {addCartItem} = value
           const {
-            addCartItem
-          } = value
-          const {dishDetails, activeCategoryId,increaseDishItemQuantity,decreaseDishItemQuantity} = this.props
+            dishDetails,
+            activeCategoryId,
+            increaseDishItemQuantity,
+            decreaseDishItemQuantity,
+          } = this.props
           const {
             addonCat,
             dishAvailability,

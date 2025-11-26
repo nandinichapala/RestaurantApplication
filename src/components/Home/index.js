@@ -22,6 +22,7 @@ class Home extends Component {
     dishesList: [],
     quantity: 0,
   }
+
   componentDidMount() {
     this.getDishesList()
   }
@@ -62,15 +63,18 @@ class Home extends Component {
       restaurantName,
     })
   }
+
   onChangeActiveTabId = menuCategoryId => {
     this.setState({activeCategoryId: menuCategoryId})
   }
 
-  renderLoadingView = () => (
-    <div className="loader-container">
-      <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
-    </div>
-  )
+  renderLoadingView = () => {
+    return (
+      <div className="loader-container">
+        <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+      </div>
+    )
+  }
 
   increaseDishItemQuantity = (dishId, activeCategoryId) => {
     this.setState(prevState => ({

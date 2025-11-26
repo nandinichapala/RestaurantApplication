@@ -3,6 +3,7 @@ import CartContext from '../../context/CartContext'
 import Header from '../Header'
 import EmptyCartView from '../EmptyCartView'
 import CartListView from '../CartListView'
+
 const Cart = () => (
   <CartContext.Consumer>
     {value => {

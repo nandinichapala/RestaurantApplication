@@ -75,8 +75,6 @@ class App extends Component {
     }
   }
 
-  
-
   render() {
     const {cartList} = this.state
     return (
