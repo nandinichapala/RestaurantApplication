@@ -1,10 +1,11 @@
 import './index.css'
 import {AiOutlineShoppingCart} from 'react-icons/ai'
 import {Link, withRouter} from 'react-router-dom'
-import CartContext from '../../context/CartContext'
 import Cookies from 'js-cookie'
+import CartContext from '../../context/CartContext'
 
 const Header = props => {
+  const {restaurantName} = props
   const onClickLogoutBtn = () => {
     const {history} = props
     Cookies.remove('jwt_token')
@@ -13,8 +14,7 @@ const Header = props => {
   return (
     <CartContext.Consumer>
       {value => {
-        const {cartList, restaurantName} = value
-
+        const {cartList} = value
         return (
           <nav className="nav-container">
             <Link to="/" className="nav-link">
