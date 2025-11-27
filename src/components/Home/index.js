@@ -68,13 +68,11 @@ class Home extends Component {
     this.setState({activeCategoryId: menuCategoryId})
   }
 
-  renderLoadingView = () => {
-    return (
-      <div className="loader-container">
-        <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
-      </div>
-    )
-  }
+  renderLoadingView = () => (
+    <div className="loader-container">
+      <Loader type="TailSpin" color="#00BFFF" height={50} width={50} />
+    </div>
+  )
 
   increaseDishItemQuantity = (dishId, activeCategoryId) => {
     this.setState(prevState => ({
